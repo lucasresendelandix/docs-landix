@@ -1,6 +1,7 @@
-import type {ReactNode} from 'react';
+﻿import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 
@@ -13,7 +14,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'Agilidade para Força de Vendas',
-    image: '/img/icone-cronometro.png',
+    image: 'img/icone-cronometro.png',
     description: (
       <>
         Agilize e simplifique processos, entregando melhores resultados em menos tempo com a mesma equipe.
@@ -22,7 +23,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Lucratividade',
-    image: '/img/icone-grafico.png',
+    image: 'img/icone-grafico.png',
     description: (
       <>
         Aumente os lucros através de processos simples, mapeados e estruturados, com custos reduzidos e desperdícios eliminados.
@@ -31,7 +32,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Gestão de Vendas',
-    image: '/img/icone-prancheta.png',
+    image: 'img/icone-prancheta.png',
     description: (
       <>
         Tenha uma gestão organizada, sem imprevistos, totalmente integrada e com análise de desempenho de toda a equipe.
@@ -41,6 +42,7 @@ const FeatureList: FeatureItem[] = [
 ];
 
 function Feature({title, image, description}: FeatureItem) {
+  const imageUrl = useBaseUrl(image);
   return (
     <motion.div
       className={clsx('col col--4')}
@@ -50,7 +52,7 @@ function Feature({title, image, description}: FeatureItem) {
       viewport={{ once: true }}
     >
       <div className="text--center">
-        <img src={image} className={styles.featureSvg} alt={title} />
+        <img src={imageUrl} className={styles.featureSvg} alt={title} />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
