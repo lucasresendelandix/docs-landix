@@ -82,7 +82,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Feito por Landix`,
+      copyright: `Feito por Landix - ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,
