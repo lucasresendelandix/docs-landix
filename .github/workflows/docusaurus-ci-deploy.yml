@@ -20,57 +20,39 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Install
-        run: npm ci
-
-      - name: Lint (if available)
-        run: npm run lint --if-present
-
-      - name: Typecheck (if available)
-        run: npm run typecheck --if-present
-
-      - name: Test (if available)
-        run: npm test --if-present
-
-      - name: Build
-        run: npm run build
+      - run: npm ci
+      - run: npm run lint --if-present
+      - run: npm run typecheck --if-present
+      - run: npm test --if-present
+      - run: npm run build
 
   deploy:
     name: Deploy - main
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 20
-
     steps:
-      - name: Checkout (full history)
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Install
-        run: npm ci
+      - run: npm ci
+      - run: npm run build
 
-      - name: Build (sanity check)
-        run: npm run build
-
-      - name: Configure Git identity (required for docusaurus deploy)
+      - name: Configure Git identity
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -78,5 +60,5 @@ jobs:
       - name: Deploy
         env:
           GIT_USER: github-actions[bot]
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_PASS: ${{ secrets.GITHUB_TOKEN }}
         run: npm run deploy
